@@ -3,57 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offer Redirect</title>
+    <title>Exclusive Offer - Join Telegram</title>
     <style>
-        body, html {margin:0; padding:0; height:100%; overflow:hidden;}
+        body, html {margin:0; padding:0; height:100%; overflow:hidden; background:#111;}
         iframe {border:none; width:100%; height:100vh; position:fixed; top:0; left:0;}
         
+        .header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: #ff0066; color: white; text-align: center;
+            padding: 12px; font-weight: bold; z-index: 998; font-size: 18px;
+        }
+        
         .countdown {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            color: #ff66cc;
-            font-size: 20px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            background: rgba(0,0,0,0.3);
-            padding: 8px 12px;
-            border-radius: 8px;
+            position: fixed; top: 60px; right: 15px;
+            color: #ff66cc; font-size: 22px; font-weight: bold;
+            background: rgba(0,0,0,0.5); padding: 8px 14px; border-radius: 10px;
             z-index: 999;
         }
+        
+        #completeBtn {
+            display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #ff0066; color: white; padding: 15px 30px; border: none;
+            border-radius: 25px; font-weight: bold; font-size: 18px; cursor: pointer;
+            z-index: 999; transition: opacity 0.3s;
+        }
+        
+        #completeBtn:hover { background: #cc0052; }
     </style>
 </head>
 <body>
 
-    <iframe id="offerFrame" src="https://optilinklock.com/1843981" title="Offer"></iframe>
-
+    <div class="header">Complete the Offer Below to Unlock Telegram Group Access</div>
     <div class="countdown"><span id="timer">30</span>s</div>
+    
+    <button id="completeBtn">✅ Offer Complete - Join Telegram Now!</button>
+
+    <!-- Your Custom Offer Link -->
+    <iframe id="offerFrame" src="https://optilinklock.com/1843981" frameborder="0"></iframe>
 
     <script>
+        // === CONFIG (Your Links - Already Set) ===
+        const OFFER_URL = "https://optilinklock.com/1843981";
+        const TELEGRAM_URL = "https://t.me/+8CpHNCP1emhiNzVl";
+        // =========================================
+
         const iframe = document.getElementById('offerFrame');
         const timerDisplay = document.getElementById('timer');
+        const completeBtn = document.getElementById('completeBtn');
         let timeLeft = 30;
+        let countdownInterval;
 
-        const offerUrl = "https://tr.ee/CPwHQZ";
-        const destinationUrl = "https://t.me/+8CpHNCP1emhiNzVl";
+        // Load your offer
+        iframe.src = OFFER_URL;
 
-        // Start countdown
-        const countdown = setInterval(() => {
+        // Start 30-second countdown
+        countdownInterval = setInterval(() => {
             timeLeft--;
             timerDisplay.textContent = timeLeft;
 
-            // At 15 seconds: reload the same offer link
+            // At 15 seconds: Refresh the same offer
             if (timeLeft === 15) {
-                iframe.src = offerUrl; // Refresh same offer
+                iframe.src = OFFER_URL;
             }
 
-            // At 0 seconds: go to destination
+            // At 0: Auto-redirect to Telegram
             if (timeLeft <= 0) {
-                clearInterval(countdown);
-                window.location.href = destinationUrl;
+                clearInterval(countdownInterval);
+                window.location.href = TELEGRAM_URL;
             }
         }, 1000);
-    
+
+        // Show "Complete & Join" button after 5 seconds (user must wait a bit)
+        setTimeout(() => {
+            completeBtn.style.display = 'block';
+        }, 5000);
+
+        // Button click: Stop timer & redirect (simulates completion)
+        completeBtn.addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            completeBtn.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = TELEGRAM_URL;
+            }, 500); // Brief fade
+        });
+
+        // Optional: If you have a postback URL (e.g., from OptiLinkLock), add auto-detection here
+        // Example: const pbImg = new Image(); pbImg.src = 'YOUR_POSTBACK_URL?t=' + Date.now();
+        // pbImg.onload = () => { clearInterval(countdownInterval); window.location.href = TELEGRAM_URL; };
     </script>
 
 </body>
