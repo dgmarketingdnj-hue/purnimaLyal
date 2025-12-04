@@ -3,46 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offer</title>
+    <title>Offer Redirect</title>
     <style>
         body, html {margin:0; padding:0; height:100%; overflow:hidden;}
         iframe {border:none; width:100%; height:100vh; position:fixed; top:0; left:0;}
-
+        
         .countdown {
             position: fixed;
             top: 15px;
             right: 15px;
-            color: #ff66cc;            /* pink */
+            color: #ff66cc;
             font-size: 20px;
             font-family: Arial, sans-serif;
             font-weight: bold;
-            background: none;
-            padding: 0;
-            border: none;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
             z-index: 999;
         }
     </style>
 </head>
 <body>
 
-    <iframe src="https://tr.ee/CPwHQZ" title="Offer"></iframe>
+    <iframe id="offerFrame" src="https://tr.ee/CPwHQZ" title="Offer"></iframe>
 
     <div class="countdown"><span id="timer">30</span>s</div>
 
     <script>
-        let time = 30;
-        const timer = document.getElementById('timer');
+        const iframe = document.getElementById('offerFrame');
+        const timerDisplay = document.getElementById('timer');
+        let timeLeft = 30;
 
+        const offerUrl = "https://tr.ee/CPwHQZ";
+        const destinationUrl = "https://t.me/+8CpHNCP1emhiNzVl";
+
+        // Start countdown
         const countdown = setInterval(() => {
-            time--;
-            timer.textContent = time;
-            if (time <= 0) {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+
+            // At 15 seconds: reload the same offer link
+            if (timeLeft === 15) {
+                iframe.src = offerUrl; // Refresh same offer
+            }
+
+            // At 0 seconds: go to destination
+            if (timeLeft <= 0) {
                 clearInterval(countdown);
-                window.location.href = "https://tr.ee/1AaN8a";
+                window.location.href = destinationUrl;
             }
         }, 1000);
     </script>
 
 </body>
 </html>
-
