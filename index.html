@@ -3,82 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Offer to Join</title>
+    <title>Unlock Telegram Group</title>
     <style>
-        body, html {margin:0;padding:0;height:100%;overflow:hidden;background:#000;font-family:Arial,sans-serif;}
-        iframe {border:none;width:100%;height:100vh;position:fixed;top:0;left:0;z-index:1;}
-        .header {position:fixed;top:0;left:0;right:0;background:#ff0066;color:white;text-align:center;padding:14px;font-weight:bold;font-size:18px;z-index:998;}
-        .countdown {position:fixed;top:60px;right:15px;color:#ff66cc;font-size:24px;font-weight:bold;padding:6px 12px;border-radius:8px;z-index:999;}
-        .proceed-btn {display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#00cc00;color:white;padding:16px 36px;border:none;border-radius:30px;font-size:18px;font-weight:bold;cursor:pointer;z-index:999;animation:pulse 1.8s infinite;}
-        .proceed-btn:hover {background:#00aa00;}
-        @keyframes pulse {0%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}100%{transform:translateX(-50%) scale(1);}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { height: 100%; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        
+        /* Fullscreen Offer */
+        .offer-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+        iframe {
+            width: 100%; height: 100%; border: none;
+        }
+
+        /* Header */
+        .header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #ff0066, #ff3399);
+            color: white; text-align: center; padding: 16px;
+            font-weight: bold; font-size: 19px; z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Timer */
+        .timer {
+            position: fixed; top: 70px; right: 20px;
+            background: rgba(255,255,255,0.15); color: #ff66cc;
+            font-size: 26px; font-weight: bold; padding: 8px 16px;
+            border-radius: 12px; z-index: 999;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Join Button (Hidden → Appears After 30s) */
+        .join-btn {
+            display: none; position: fixed; bottom: 40px; left: 50%;
+            transform: translateX(-50%); background: #00cc00; color: white;
+            padding: 18px 40px; border: none; border-radius: 50px;
+            font-size: 20px; font-weight: bold; cursor: pointer;
+            z-index: 999; box-shadow: 0 8px 20px rgba(0,204,0,0.4);
+            animation: pulse 2s infinite; transition: all 0.3s;
+        }
+        .join-btn:hover {
+            background: #00aa00; transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0,170,0,0.5);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 20px rgba(0,204,0,0.4); }
+            50% { box-shadow: 0 12px 30px rgba(0,204,0,0.6); }
+            100% { box-shadow: 0 8px 20px rgba(0,204,0,0.4); }
+        }
+
+        /* Optional: Subtle loading animation */
+        .loading {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            color: #aaa; font-size: 14px; z-index: 998;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <div class="header">Complete Offer to Unlock Telegram Group</div>
-    <div class="countdown"><span id="timer">30</span>s</div>
 
-    <button class="proceed-btn" id="proceedBtn">Offer Complete – Proceed to Telegram</button>
+    <!-- Timer -->
+    <div class="timer"><span id="countdown">30</span>s</div>
 
-    <iframe id="offerFrame" src="https://optilinklock.com/1843981" frameborder="0"></iframe>
+    <!-- Join Button (Appears After 30s) -->
+    <button class="join-btn" id="joinBtn">
+        Join Telegram Group Now
+    </button>
 
-    <!-- TRACKING PIXEL (Replace with your affiliate pixel) -->
-    <!-- <img src="YOUR_TRACKING_PIXEL_URL" width="1" height="1" style="display:none;"> -->
+    <!-- Optional Loading Hint -->
+    <div class="loading">Offer loading securely...</div>
+
+    <!-- Fullscreen Offer -->
+    <div class="offer-container">
+        <iframe src="https://optilinklock.com/1843981" frameborder="0"></iframe>
+    </div>
 
     <script>
-        const iframe = document.getElementById('offerFrame');
-        const timerDisplay = document.getElementById('timer');
-        const proceedBtn = document.getElementById('proceedBtn');
-        const TELEGRAM_URL = "https://t.me/+8CpHNCP1emhiNzVl";
+        // === CONFIG (Your Links) ===
+        const TELEGRAM_LINK = "https://t.me/+8CpHNCP1emhiNzVl";
+        const JOIN_BUTTON = document.getElementById('joinBtn');
+        const COUNTDOWN_DISPLAY = document.getElementById('countdown');
 
         let timeLeft = 30;
-        let countdown;
-        let offerCompleted = false;
 
-        // Timer (visual only)
-        countdown = setInterval(() => {
+        // === 30-Second Countdown ===
+        const timer = setInterval(() => {
             timeLeft--;
-            timerDisplay.textContent = timeLeft;
+            COUNTDOWN_DISPLAY.textContent = timeLeft;
+
+            // After 30 seconds → Show Join Button
             if (timeLeft <= 0) {
-                clearInterval(countdown);
-                timerDisplay.textContent = "0";
+                clearInterval(timer);
+                COUNTDOWN_DISPLAY.textContent = "Done";
+                COUNTDOWN_DISPLAY.style.color = "#00cc00";
+                JOIN_BUTTON.style.display = "block";
             }
         }, 1000);
 
-        // Auto-detect completion
-        setInterval(() => {
-            try {
-                const url = iframe.contentWindow.location.href.toLowerCase();
-                if (!offerCompleted && (
-                    url.includes('thankyou') || url.includes('success') || 
-                    url.includes('complete') || url.includes('congrat') || 
-                    url.includes('done') || url.includes('redirect') ||
-                    url !== "https://optilinklock.com/1843981"
-                )) {
-                    offerCompleted = true;
-                    showProceed();
-                }
-            } catch (e) {}
-        }, 2000);
-
-        // Manual trigger
-        window.addEventListener('message', (e) => {
-            if (e.data === 'offer_done') showProceed();
-        });
-
-        function showProceed() {
-            clearInterval(countdown);
-            timerDisplay.textContent = "Done";
-            timerDisplay.style.color = "#00cc00";
-            proceedBtn.style.display = "block";
-        }
-
-        proceedBtn.addEventListener('click', () => {
-            proceedBtn.innerHTML = "Joining...";
-            proceedBtn.disabled = true;
-            setTimeout(() => window.location.href = https://t.me/+8CpHNCP1emhiNzVl, 800);
+        // === Click Button → Open Telegram (No Redirect) ===
+        JOIN_BUTTON.addEventListener('click', () => {
+            JOIN_BUTTON.innerHTML = "Opening Telegram...";
+            JOIN_BUTTON.disabled = true;
+            // Open in new tab (user stays on page if they want)
+            window.open(TELEGRAM_LINK, '_blank');
+            // Optional: Close page after 2 sec
+            setTimeout(() => {
+                JOIN_BUTTON.innerHTML = "Joined!";
+            }, 1500);
         });
     </script>
+
 </body>
 </html>
