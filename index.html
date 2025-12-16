@@ -35,7 +35,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Join Button (Hidden → Appears After 30s) */
+        /* Join Button (Hidden → Appears After 15s) */
         .join-btn {
             display: none; position: fixed; bottom: 40px; left: 50%;
             transform: translateX(-50%); background: #00cc00; color: white;
@@ -67,9 +67,9 @@
     <div class="header">Unlocking Telegram Group</div>
 
     <!-- Timer -->
-    <div class="timer"><span id="countdown">30</span>s</div>
+    <div class="timer"><span id="countdown">15</span>s</div>
 
-    <!-- Join Button (Appears After 30s) -->
+    <!-- Join Button (Appears After 15s) -->
     <button class="join-btn" id="joinBtn">
         Join Telegram Group Now
     </button>
@@ -88,14 +88,14 @@
         const JOIN_BUTTON = document.getElementById('joinBtn');
         const COUNTDOWN_DISPLAY = document.getElementById('countdown');
 
-        let timeLeft = 30;
+        let timeLeft = 15;
 
-        // === 30-Second Countdown ===
+        // === 15-Second Countdown ===
         const timer = setInterval(() => {
             timeLeft--;
             COUNTDOWN_DISPLAY.textContent = timeLeft;
 
-            // After 30 seconds → Show Join Button
+            // After 15 seconds → Show Join Button
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 COUNTDOWN_DISPLAY.textContent = "Done";
@@ -113,7 +113,7 @@
             // Optional: Close page after 2 sec
             setTimeout(() => {
                 JOIN_BUTTON.innerHTML = "Joined!";
-            }, 1500);
+            }, 1200);
         });
     </script>
 
